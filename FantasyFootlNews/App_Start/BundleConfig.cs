@@ -31,6 +31,11 @@ namespace WebApplication1
                       "~/Scripts/fantasy-football/team-manager.js"
                 ));
 
+            bundles.Add(new StyleBundle("~/bundles/article").Include(
+                    "~/Content/fantasy-football/article.css"
+                ));
+
+
         }
     }
 }

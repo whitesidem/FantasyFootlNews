@@ -73,6 +73,12 @@ ffbanter.view = function () {
             playerSelect.removeChild(playerSelect.firstChild);
         }
 
+        var option = document.createElement("option");
+        option.setAttribute('value', 0);
+        option.innerHTML = "Please Select...";
+        playerSelect.appendChild(option);
+
+
         players.forEach(function(item, index) {
             var option = document.createElement("option");
             option.setAttribute('value', item.jerseyNumber);
