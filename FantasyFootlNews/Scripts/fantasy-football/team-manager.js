@@ -3,20 +3,14 @@ var ffbanter = ffbanter || {};
 ffbanter.current = ffbanter.current || {};
 
 
-
-
 ffbanter.utility = function() {
-
     var stripLastIdFromUri = function(uri) {
         var id = uri.match(/\/([^/]*)$/)[1];
         return id;
     }
-
-
     return {
         stripLastIdFromUri: stripLastIdFromUri
     }
-
 }();
 
 ffbanter.view = function () {
@@ -37,7 +31,7 @@ ffbanter.view = function () {
 
         var fixtureLink = competition._links.fixtures;
 
-        var includeDays = 7;   //next 5 days
+        var includeDays = 7;   
         ffbanter.datasource.loadFixturesByDays(fixtureLink.href,includeDays);
 
     }
@@ -113,8 +107,8 @@ ffbanter.view = function () {
 
     var renderArticle = function() {
         var fixture = ffbanter.current.fixture;
-        var mainheading = jQuery("#articleContent h2");
-        var subheading = jQuery("#articleContent h3");
+        var mainheading = jQuery("#articleContent h1");
+        var subheading = jQuery(".lead");
 
         var fixtureDesc = fixture.homeTeamName + " play at home against " + fixture.awayTeamName + " on " + jQuery.format.date(fixture.date, 'ddd');
 
@@ -123,6 +117,13 @@ ffbanter.view = function () {
         mainheading.text(currentPlayer);
         subheading.text(fixtureDesc);
 
+        jQuery('#criteriaArea').hide();
+        jQuery('#articleContent').show();
+    }
+
+    var showCriteria = function() {
+        jQuery('#criteriaArea').show();
+        jQuery('#articleContent').hide();
     }
 
     return {
@@ -131,7 +132,8 @@ ffbanter.view = function () {
         refreshTeamPlayers: refreshTeamPlayers,
         renderInjuryTypes: renderInjuryTypes,
         renderBodyParts: renderBodyParts,
-        renderArticle: renderArticle
+        renderArticle: renderArticle,
+        showCriteria: showCriteria
     }
 }();
 
@@ -233,10 +235,7 @@ ffbanter.datasource = function() {
 
 
 jQuery(document).ready(function() {
-//    var includeDays = 7;   //next 5 days
-        //    ffbanter.datasource.loadFixturesByDays(includeDays);
-
-        var competitionId = 445; //premiership
+        var competitionId = 445; //premiership id
         ffbanter.datasource.loadCompetition(competitionId);
 
         ffbanter.datasource.injuryTypes = ffbanter.datasource.loadInjuryTypes();
@@ -262,19 +261,5 @@ jQuery(document).ready(function() {
         jQuery('#bodyParts').on('change', function (e) {
             ffbanter.current.bodyPart = e.target.options[e.target.selectedIndex].text;
         });
-
-
-    //$.ajax({
-    //    headers: { 'X-Auth-Token': '9a7ccbd093fe46e18b1c014e46be948b' },
-    //    url: 'http://api.football-data.org/v1/fixtures?timeFrame=n' + includeDays,
-    //    dataType: 'json',
-    //    type: 'GET',
-    //}).done(function (response) {
-    //    // do something with the response, e.g. isolate the id of a linked resource        
-    //    var regex = /.*?(\d+)$/; // the ? makes the first part non-greedy
-    //    var res = regex.exec(response.fixtures[0]._links.awayTeam.href);
-    //    var teamId = res[1];
-    //    console.log(teamId);
-    //});
 });
 

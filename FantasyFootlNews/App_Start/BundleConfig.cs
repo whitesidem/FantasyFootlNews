@@ -32,6 +32,7 @@ namespace WebApplication1
                 ));
 
             bundles.Add(new StyleBundle("~/bundles/article").Include(
+                    "~/Content/fantasy-football/jumbotron-narrow.css",
                     "~/Content/fantasy-football/article.css"
                 ));
 
